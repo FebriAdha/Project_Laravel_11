@@ -17,7 +17,7 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            <li class="{{ Route::is('admin.product') ? 'active' : ''}}">
+            <li class="{{ Request::is('product') ? 'active' : ''}}">
                 <a class="nav-link" href="{{ route('admin.product') }}">
                     <i class="fas fa-box"></i>
                     <span>Produk</span>
