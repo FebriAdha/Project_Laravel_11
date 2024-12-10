@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Admin\DistributorController;
 
 // Guest Routes
 Route::group(['middleware' => 'guest'], function () {
@@ -30,6 +31,15 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
     Route::post('/product/update/{id}', [ProductController::class, 'update'])->name('admin.product.update');
     Route::delete('/product/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+
+    Route::get('/distributor', [DistributorController::class, 'index'])->name('admin.distributor');
+    Route::post('/distributor/import', [DistributorController::class, 'import'])->name('distributor.import');
+    Route::get('/distributor/export', [DistributorController::class, 'export'])->name('distributor.export');
+    Route::post('/distributor/store', [DistributorController::class, 'store'])->name('distributor.store');
+    Route::get('/distributor/create', [DistributorController::class, 'create'])->name('distributor.create');
+    Route::get('/distributor/edit/{id}', [DistributorController::class, 'edit'])->name('distributor.edit');
+    Route::post('/distributor/update/{id}', [DistributorController::class, 'update'])->name('admin.distributor.update');
+    Route::delete('/distributor/delete/{id}', [DistributorController::class, 'delete'])->name('distributor.delete');
 });
 
 // User Routes

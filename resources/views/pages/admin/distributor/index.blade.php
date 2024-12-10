@@ -1,65 +1,82 @@
 @extends('layouts.admin.main')
 
-@section('title', 'Admin Product')
+@section('title', 'Admin Distributor')
 
 @section('content')
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Produk</h1>
+            <h1>Distributor</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active">
                     <a href="{{ route('admin.dashboard') }}">Dashboard</a>
                 </div>
-                <div class="breadcrumb-item">Produk</div>
+                <div class="breadcrumb-item">Distributor</div>
             </div>
         </div>
 
-        <a href="{{ route('product.create') }}" class="btn btn-icon icon-left btn-primary">
-            <i class="fas fa-plus"></i> Produk
-        </a>
+        <div class="row">
+            <!-- Actions -->
+            <div class="col-md-4 col-sm-3">
+                <a href="{{ route('distributor.create') }}" class="btn btn-icon icon-left btn-primary">
+                    <i class="fas fa-plus"></i> Tambah Distributor
+                </a>
+                <a href="{{ route('distributor.export') }}" class="btn btn-icon icon-left btn-info">
+                    <i class="fas fa-print"></i> Export
+                </a>
+            </div>
+            <!-- Import Form -->
+            <div class="col-md-8 col-sm-9">
+                <form action="{{ route('distributor.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="d-flex align-items-center">
+                        <div class="form-group mb-0 mr-2">
+                            <div class="custom-file">
+                                <input class="custom-file-input" name="file" id="customFile" type="file" required>
+                                <label class="custom-file-label" for="customFile">Pilih File Excel</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-icon icon-left btn-primary">
+                            <i class="fas fa-plus"></i> Import
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
+        <!-- Distributor Table -->
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered table-md">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nama Produk</th>
-                            <th>Harga Produk</th>
-                            <th>Diskon</th>
-                            <th>Harga Setelah Diskon</th>
                             <th>Nama Distributor</th>
+                            <th>Kota</th>
+                            <th>Provinsi</th>
+                            <th>Kontak</th>
+                            <th>Email</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php $no = 0; @endphp
-                        @forelse ($data as $item)
+                        @forelse ($distributor as $item)
                             <tr>
                                 <td>{{ ++$no }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->price }} Points</td>
-                                <td>
-                                    {{ $item->discount ? $item->discount . '%' : 'Tidak ada diskon' }}
-                                </td>
-                                <td>
-                                    @if($item->discount)
-                                        {{ $item->price - ($item->price * $item->discount / 100) }} Points
-                                    @else
-                                        {{ $item->price }} Points
-                                    @endif
-                                </td>
                                 <td>{{ $item->nama_distributor }}</td>
+                                <td>{{ $item->kota }}</td>
+                                <td>{{ $item->provinsi }}</td>
+                                <td>{{ $item->kontak }}</td>
+                                <td>{{ $item->email }}</td>
                                 <td>
-                                    <a href="{{ route('product.detail', $item->id) }}" class="badge badge-info">Detail</a>
-                                    <a href="{{ route('product.edit', $item->id) }}" class="badge badge-warning">Edit</a>
+                                    <a href="{{ route('distributor.edit', $item->id) }}" class="badge badge-warning">Edit</a>
                                     <a href="javascript:void(0)" class="badge badge-danger" data-id="{{ $item->id }}" onclick="confirmDelete({{ $item->id }})">Hapus</a>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center">Data Produk Kosong</td>
+                                <td colspan="7" class="text-center">Data Distributor Kosong</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -83,7 +100,7 @@
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch('{{ url("/product/delete") }}/' + distributorId, {
+                fetch('{{ url("/distributor/delete") }}/' + distributorId, {
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),

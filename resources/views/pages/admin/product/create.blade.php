@@ -13,13 +13,24 @@
             </div>
         </div>
 
-        <a href="{{ route('admin.product') }}" class="btn btn-icon icon-left btn-warning"> Kembali</a>
-
+        <a href="{{ route('admin.product') }}" class="btn btn-icon icon-left btn-warning"> 
+            <i class="fas fa-arrow-left"></i> Kembali
+        </a>
         <div class="card mt-4">
             <form action="{{ route('product.store') }}" class="needs-validation" novalidate="" enctype="multipart/form-data" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="id_distributor">Nama Distributor</label>
+                                <select name="id_distributor" id="id_distributor" class="form-control">
+                                    @foreach ($distributor as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama_distributor }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="name">Nama Produk</label>

@@ -26,33 +26,34 @@
             <div class="col-12 col-md-4 col-lg-12 m-auto">
                 <article class="article article-style-c">
                     <div class="article-header">
-                        <div class="article-image" data-background="{{ asset('images/' . $product->image) }}"></div>
+                        <div class="article-image" data-background="{{ asset('images/' . $data->image) }}"></div>
                     </div>
                     <div class="article-details">
                         <div class="article-category">
-                            <a href="#">{{ $product->name }}</a>
+                            <a href="#">{{ $data->name }}</a>
                             <div class="bullet"></div>
-                            <a href="#">{{ $product->category }}</a>
+                            <a href="#">{{ $data->category }}</a>
                         </div>
+                        <div class="article-category"><a href="#">{{ $data->nama_distributor }}</a></div>
                         <div class="article-title">
                             <h2>
-                                @if ($product->discount > 0)
+                                @if ($data->discount > 0)
                                     <!-- Menampilkan harga dengan diskon -->
                                     <span style="text-decoration: line-through; color: black;">
-                                        {{ $product->price }} Points
+                                        {{ $data->price }} Points
                                     </span>
                                     <span class="ml-2" style="color: red;">
-                                        {{ $product->price - ($product->price * $product->discount / 100) }} Points
-                                        {{ $product->discount }}%
+                                        {{ $data->price - ($data->price * $data->discount / 100) }} Points
+                                        {{ $data->discount }}%
                                     </span>
                                 @else
                                     <!-- Menampilkan harga tanpa diskon -->
-                                    {{ $product->price }} Points
+                                    {{ $data->price }} Points
                                 @endif
                             </h2>
                         </div>
                         <hr>
-                        <p>{{ $product->description }}</p>
+                        <p>{{ $data->description }}</p>
                     </div>
                 </article>
             </div>
